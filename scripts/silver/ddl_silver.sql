@@ -1,4 +1,18 @@
---CREATE Tables from CRM
+/* ===========================================================================================
+   Script SQL – Création et chargement des tables Silver (zone de traitement) pour CRM & ERP
+   -------------------------------------------------------------------------------------------
+   Description :
+   - Supprime et recrée les tables Silver : crm_cust_info, crm_prd_info, crm_sales_details,
+     erp_cust_az12, erp_loc_a101, erp_px_cat_g1v2.
+   - Charge les données depuis les fichiers CSV situés dans les répertoires source_crm et 
+     source_erp à l’aide de BULK INSERT après avoir vidé les tables (TRUNCATE).
+   - Préparation pour le traitement et la transformation dans un data warehouse SQL.
+   
+   Remarques :
+   - Chaque table est vérifiée (DROP si elle existe), puis recréée.
+   - Les insertions se font en mode full load (TRUNCATE + BULK INSERT).
+   - Les chemins de fichiers doivent être accessibles et les droits de lecture accordés.
+=========================================================================================== */
 
 --TSQL check
 
