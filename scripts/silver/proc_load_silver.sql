@@ -1,3 +1,37 @@
+
+/* ===========================================================================================
+   Procédure stockée : silver.load_silver
+   -------------------------------------------------------------------------------------------
+   Description :
+   Cette procédure charge les tables de la couche Silver à partir des données de la couche 
+   Bronze dans un data warehouse SQL. Elle applique des règles de nettoyage, de normalisation 
+   et de transformation pour préparer les données à l'analyse.
+
+   Étapes principales :
+   - Troncature des tables Silver existantes.
+   - Insertion et transformation des données issues des tables Bronze :
+     * Nettoyage des chaînes de caractères (TRIM).
+     * Standardisation des valeurs (genre, statut marital, pays...).
+     * Gestion des doublons avec ROW_NUMBER.
+     * Validation des dates et correction des formats anormaux.
+     * Calculs conditionnels pour les ventes (ex: sls_sales vs prix * quantité).
+   - Mesure et affichage du temps de traitement pour chaque table.
+
+   Tables concernées :
+   - silver.crm_cust_info
+   - silver.crm_prd_info
+   - silver.crm_sales_details
+   - silver.erp_cust_az12
+   - silver.erp_loc_a101
+   - silver.erp_px_cat_g1v2
+
+   Gestion d'erreur :
+   - Bloc TRY/CATCH avec impression des messages d’erreur SQL.
+
+   Utilisation :
+   EXEC silver.load_silver
+=========================================================================================== */
+
 CREATE OR ALTER PROCEDURE silver.load_silver AS
 BEGIN
     DECLARE @start_time DATETIME, @end_time DATETIME
