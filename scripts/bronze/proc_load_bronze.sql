@@ -1,14 +1,7 @@
-USE [Datawarehouse]
-GO
-/****** Object:  StoredProcedure [bronze].[load_bronze]    Script Date: 19/05/2025 09:51:10 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 --===========================================================
 -- STORED PROCEDURE: Load Data into Bronze Layer with Duration Tracking and Error Handling
 --===========================================================
-ALTER   PROCEDURE [bronze].[load_bronze] AS
+CREATE OR ALTER PROCEDURE bronze.load_bronze AS
 BEGIN 
     DECLARE @start_time DATETIME , @end_time DATETIME, @batch_start_time DATETIME, @batch_end_time DATETIME   
     BEGIN TRY
