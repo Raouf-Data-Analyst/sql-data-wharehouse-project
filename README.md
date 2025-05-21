@@ -53,9 +53,10 @@ Develop SQL-based analytics to deliver detailed insights into:
 - **Product Performance**
 - **Sales Trends**
 
-These insights empower stakeholders with key business metrics, enabling strategic decision-making.  
+These insights empower stakeholders with key business metrics, enabling strategic decision-making. 
 
-For more details, refer to [docs/requirements.md](docs/requirements.md).
+Link to the notion dashbord 
+https://www.notion.so/SQL-Data-Warehouse-Project-1f3ffca9914580ec917dd925cc0d7308?pvs=4 
 
 ## 📂 Repository Structure
 ```
