@@ -1,0 +1,46 @@
+📘 Data Catalog — Schéma gold
+🗂️ 1. Table de dimension : gold.dim_customers
+
+
+| **Nom de la colonne** | **Type** | **Description**                | **Source**                                                    |
+| --------------------- | -------- | ------------------------------ | ------------------------------------------------------------- |
+| `customer_key`        | INT      | Clé substitut technique unique | Générée via `ROW_NUMBER()`                                    |
+| `customer_id`         | STRING   | ID client (source CRM)         | `silver.crm_cust_info.cst_id`                                 |
+| `customer_number`     | STRING   | Clé métier client              | `silver.crm_cust_info.cst_key`                                |
+| `first_name`          | STRING   | Prénom du client               | `silver.crm_cust_info.cst_firstname`                          |
+| `last_name`           | STRING   | Nom du client                  | `silver.crm_cust_info.cst_lastname`                           |
+| `country`             | STRING   | Pays d’origine du client       | `silver.erp_loc_A101.cntry`                                   |
+| `marital_status`      | STRING   | Statut marital du client       | `silver.crm_cust_info.cst_marital_status`                     |
+| `gender`              | STRING   | Sexe (priorité CRM sinon ERP)  | `silver.crm_cust_info.cst_gndr` ou `silver.erp_cust_az12.gen` |
+| `birthday`            | DATE     | Date de naissance              | `silver.erp_cust_az12.bdate`                                  |
+| `create_date`         | DATE     | Date de création dans le CRM   | `silver.crm_cust_info.cst_create_date`                        |
+
+🗂️ 2. Table de dimension : gold.dim_products
+
+| **Nom de la colonne** | **Type** | **Description**            | **Source**                           |
+| --------------------- | -------- | -------------------------- | ------------------------------------ |
+| `product_key`         | INT      | Clé substitut technique    | Générée via `ROW_NUMBER()`           |
+| `product_id`          | STRING   | ID produit                 | `silver.crm_prd_info.prd_id`         |
+| `product_number`      | STRING   | Clé produit                | `silver.crm_prd_info.prd_key`        |
+| `product_name`        | STRING   | Nom du produit             | `silver.crm_prd_info.prd_nm`         |
+| `category_id`         | STRING   | ID de catégorie            | `silver.crm_prd_info.cat_id`         |
+| `category`            | STRING   | Catégorie principale       | `silver.erp_px_cat_g1v2.cat`         |
+| `subcategory`         | STRING   | Sous-catégorie             | `silver.erp_px_cat_g1v2.subcat`      |
+| `maintenance`         | STRING   | Type de maintenance        | `silver.erp_px_cat_g1v2.maintenance` |
+| `cost`                | DECIMAL  | Coût unitaire              | `silver.crm_prd_info.prd_cost`       |
+| `product_line`        | STRING   | Ligne de produit           | `silver.crm_prd_info.prd_line`       |
+| `start_date`          | DATE     | Début de commercialisation | `silver.crm_prd_info.prd_start_dt`   |
+
+🗂️ 3. Table de faits : gold.fact_sales
+
+| **Nom de la colonne** | **Type** | **Description**                        | **Source**                              |
+| --------------------- | -------- | -------------------------------------- | --------------------------------------- |
+| `order_number`        | STRING   | Numéro de commande                     | `silver.crm_sales_details.sls_ord_num`  |
+| `product_key`         | INT      | Clé produit (lien vers `dim_products`) | `gold.dim_products.product_key`         |
+| `customer_key`        | INT      | Clé client (lien vers `dim_customers`) | `gold.dim_customers.customer_key`       |
+| `order_date`          | DATE     | Date de commande                       | `silver.crm_sales_details.sls_order_dt` |
+| `shipping_date`       | DATE     | Date d’expédition                      | `silver.crm_sales_details.sls_ship_dt`  |
+| `due_date`            | DATE     | Date d’échéance prévue                 | `silver.crm_sales_details.sls_due_dt`   |
+| `sales_amount`        | DECIMAL  | Montant total de la vente              | `silver.crm_sales_details.sls_sales`    |
+| `quantity`            | INT      | Quantité vendue                        | `silver.crm_sales_details.sls_quantity` |
+| `price`               | DECIMAL  | Prix unitaire                          | `silver.crm_sales_details.sls_price`    |
