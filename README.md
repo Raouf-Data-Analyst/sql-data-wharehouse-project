@@ -8,6 +8,7 @@ This project demonstrates a comprehensive data warehousing and analytics solutio
 ---
 ## 🏗️ Data Architecture
 ![Architecture de projet](https://github.com/Raouf-Data-Analyst/sql-data-wharehouse-project/blob/main/docs/Project%20Architecture.png)
+
 The data architecture for this project follows Medallion Architecture **Bronze**, **Silver**, and **Gold** layers:
 
 
